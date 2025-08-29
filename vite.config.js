@@ -6,13 +6,16 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    // Allow all hosts for Replit environment (dynamic hostnames)
+    // Allow dynamic Replit subdomains
     allowedHosts: 'all',
+    // Listen on all interfaces so Replit URL can reach it
     host: '0.0.0.0',
-    port: 5000,
-    // Your existing proxy settings
+    // Use Replit's assigned port or fall back to 5173
+    port: process.env.PORT || 5173,
+    // Proxy backend API calls
     proxy: {
       '/api': 'http://127.0.0.1:8000',
     },
   },
 })
+
